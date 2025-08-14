@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <title>Infinity Salon – App-Style Web</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <meta name="theme-color" content="#ec4899"/>
+
+  <style>
+    /* App-like safe area */
+    body { background: #fff7fb; }
+    .glass {
+      backdrop-filter: saturate(180%) blur(10px);
+      background: rgba(255, 255, 255, 0.65);
+    }
+    /* Auto-slide horizontal ticker */
+    .ticker {
+      position: relative;
+      overflow: hidden;
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+    .ticker-track {
+      display: flex;
+      gap: .75rem;
+      width: max-content;
+      animation: scroll 18s linear infinite;
+    }
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    /* Bottom sheet */
+    .sheet {
+      transition: transform .35s ease, opacity .25s ease;
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    .sheet.open {
+      transform: translateY(0%);
+      opacity: 1;
+    }
+    /* Tap highlight removal for mobile feel */
+    * { -webkit-tap-highlight-color: transparent; }
+  </style>
+</head>
+<body class="min-h-screen text-gray-800">
+
+  <!-- App Bar -->
+  <header class="sticky top-0 z-40 bg-gradient-to-r from-pink-500 to-fuchsia-500 text-white">
+    <div class="max-w-md mx-auto px-4 pt-8 pb-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <!-- Simple logo -->
+          <div class="w-10 h-10 rounded-2xl bg-white/20 flex items-center justify-center shadow">
+            <span class="text-xl font-bold">∞</span>
+          </div>
+          <div>
+            <h1 class="text-2xl font-extrabold leading-tight">Infinity Salon</h1>
+            <p class="text-white/80 text-sm">Pimple Saudagar · Pune</p>
+          </div>
+        </div>
+        <button id="btnCall" class="rounded-2xl px-3 py-2 bg-white/20 text-white text-sm shadow">
+          Call
+        </button>
+      </div>
+
+      <!-- Auto-sliding horizontal banner (chips) -->
+      <div class="ticker mt-4">
+        <div class="ticker-track" id="tickerTrack">
+          <!-- duplicate group twice for seamless loop -->
+          <div class="flex gap-3 pr-3">
+            <span class="px-3 py-1 rounded-full bg-white/20 whitespace-nowrap">⭐ 400+ 5 Star Reviews</span>
+            <span class="px-3 py-1 rounded-full bg-white/20 whitespace-nowrap">👥 40,000+ Instagram Family</span>
+            <span class="px-3 py-1 rounded-full bg-white/20 whitespace-nowrap">🏆 Top Employee Award: Mr. Chand</span>
+            <span class="px-3 py-1 rounded-full bg-white/20 whitespace-nowrap">💐 Top Ladies Employee Award: Swapnali Kharat Madam</span>
+          </div>
+          <div class="flex gap-3 pr-3">
+            <span class="px-3 py-1 rounded-full bg-white/20 whitespace-nowrap">⭐ 400+ 5 Star Reviews</span>
+            <span class="px-3 py-1 rounded-full bg-white/20 whitespace-nowrap">👥 40,000+ Instagram Family</span>
+            <span class="px-3 py-1 rounded-full bg-white/20 whitespace-nowrap">🏆 Top Employee Award: Chand</span>
+            <span class="px-3 py-1 rounded-full bg-white/20 whitespace-nowrap">💐 Top Ladies Employee: Swapnali Kharat Madam</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="max-w-md mx-auto px-4 pb-28">
+
+    <!-- Welcome card -->
+    <section class="mt-6">
+      <div class="glass rounded-3xl p-5 shadow">
+        <p class="text-sm text-gray-600">🌸 Dullness ends where Infinity Salon begins.💖 We don’t just style — we elevate your spirit.✨ Radiance, confidence, luxury — that’s the Infinity promise.</p>
+      </div>
+    </section>
+
+    <!-- Quick Actions Grid -->
+    <section class="mt-5 grid grid-cols-2 gap-4">
+      <!-- Appointment Booking -->
+      <a href="https://api.whatsapp.com/send/?phone=%2B918432019333&text=Hi+Mam%2C+Please+book+my+appointment+for+today.&type=phone_number&app_absent=0"
+         target="_blank" rel="noopener"
+         class="rounded-3xl p-4 bg-white shadow border border-pink-100 active:scale-[.98] transition">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-pink-100 flex items-center justify-center">💬</div>
+          <div>
+            <h3 class="font-semibold">Appointment Booking</h3>
+            <p class="text-xs text-gray-500">WhatsApp in one tap</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Ratecard -->
+      <button id="btnRatecard"
+              class="rounded-3xl p-4 bg-white shadow border border-pink-100 active:scale-[.98] transition w-full text-left">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-pink-100 flex items-center justify-center">💳</div>
+          <div>
+            <h3 class="font-semibold">Ratecard</h3>
+            <p class="text-xs text-gray-500">Men · Women · Kids</p>
+          </div>
+        </div>
+      </button>
+
+      <!-- Location -->
+      <a href="https://maps.google.com/?q=Infinity+Salon,+Shop+number+9,+Strling+Blooms,+Godambe+Corner,+Pimple+Saudagar,+Pune+411017"
+         target="_blank" rel="noopener"
+         class="rounded-3xl p-4 bg-white shadow border border-pink-100 active:scale-[.98] transition">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-pink-100 flex items-center justify-center">📍</div>
+          <div>
+            <h3 class="font-semibold">Location</h3>
+            <p class="text-xs text-gray-500">Get directions</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Give Review -->
+      <a href="https://maps.app.goo.gl/PD34TwrfvQ1Dm7ya8" target="_blank" rel="noopener"
+         class="rounded-3xl p-4 bg-white shadow border border-pink-100 active:scale-[.98] transition">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-pink-100 flex items-center justify-center">⭐</div>
+          <div>
+            <h3 class="font-semibold">Give Review</h3>
+            <p class="text-xs text-gray-500">Google Reviews</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Instagram Reels -->
+      <a href="https://www.instagram.com/infinitypune" target="_blank" rel="noopener"
+         class="rounded-3xl p-4 bg-white shadow border border-pink-100 active:scale-[.98] transition">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-pink-100 flex items-center justify-center">🎬</div>
+          <div>
+            <h3 class="font-semibold">Instagram Reels</h3>
+            <p class="text-xs text-gray-500">@infinitypune</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- 24x7 Owner's Support -->
+      <div class="flex gap-3">
+        <a href="tel:+919405411217"
+           class="flex-1 rounded-3xl p-4 bg-white shadow border border-pink-100 active:scale-[.98] transition">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-2xl bg-pink-100 flex items-center justify-center">📞</div>
+            <div>
+              <h3 class="font-semibold">24×7 Owner’s Support</h3>
+              <p class="text-xs text-gray-500">Click to call</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://wa.me/918432019333?text=Hello%20Infinity%20Salon%2C%20I%20need%20support."
+           target="_blank" rel="noopener"
+           class="w-16 rounded-3xl p-4 bg-white shadow border border-pink-100 active:scale-[.98] transition flex items-center justify-center">
+          💬
+        </a>
+      </div>
+    </section>
+
+  
+
+
+
+<!-- Hours / Info Card -->
+<section class="mt-6">
+  <div class="rounded-3xl p-6 bg-gradient-to-br from-pink-50 via-white to-pink-100 shadow-lg border border-pink-200">
+    
+    <!-- Heading -->
+    <h4 class="font-semibold text-lg flex items-center gap-2 text-pink-600">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7z" />
+      </svg>
+      Studio Info
+    </h4>
+
+    <!-- Address -->
+    <p class="text-sm text-gray-700 mt-2 leading-relaxed">
+      Shop No. 9, Strling Blooms, Godambe Corner, <br/> 
+      Pimple Saudagar, Pune 411017
+    </p>
+
+    <!-- Info Grid -->
+    <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
+      <div class="flex items-center gap-2 rounded-2xl bg-white px-3 py-2 shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        Open: 10:00 AM – 10:00 PM
+      </div>
+      <div class="flex items-center gap-2 rounded-2xl bg-white px-3 py-2 shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+        Walk-ins Welcome
+      </div>
+    </div>
+
+    <!-- Button -->
+    <div class="mt-5">
+      <a href="https://maps.app.goo.gl/PD34TwrfvQ1Dm7ya8" 
+         class="inline-block w-full text-center rounded-2xl bg-pink-500 text-white py-2 text-sm font-medium shadow hover:bg-pink-600 transition">
+        📍 Get Directions
+      </a>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+<!-- Floating Footer (like mobile navbar) -->
+<footer class="fixed bottom-0 left-0 right-0 z-40">
+  <div class="max-w-md mx-auto px-4 pb-6">
+    <div class="rounded-3xl shadow-lg border border-white/20
+                bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
+      <div class="flex items-center justify-between px-4 py-3 text-sm text-white">
+        
+        <!-- Rewards -->
+        <a href="https://view-prices-discounts-appointments.github.io/ScratchWin/"
+           target="_blank" rel="noopener"
+           class="flex flex-col items-center hover:opacity-80 transition">
+          <span class="text-2xl">🎁</span>
+          <span class="mt-1">Rewards</span>
+        </a>
+
+        <!-- Prime -->
+        <a href="https://view-prices-discounts-appointments.github.io/InfinitySalon/"
+           target="_blank" rel="noopener"
+           class="flex flex-col items-center hover:opacity-80 transition">
+          <span class="text-2xl">👑</span>
+          <span class="mt-1">Prime</span>
+        </a>
+
+<!-- Offers -->
+<a href="https://view-prices-discounts-appointments.github.io/Prime-Members/"
+   target="_blank" rel="noopener"
+   class="flex flex-col items-center hover:opacity-80 transition text-2xl">
+  💎
+  <span class="mt-1 text-base">Offers</span>
+</a>
+
+
+        <!-- Tips -->
+        <a href="https://www.instagram.com/infinitypune"
+           target="_blank" rel="noopener"
+           class="flex flex-col items-center hover:opacity-80 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.868v4.264a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/>
+          </svg>
+          <span class="mt-1">Tips</span>
+        </a>
+
+        <!-- WhatsApp -->
+        <a href="https://api.whatsapp.com/send?phone=918432019333"
+           target="_blank" rel="noopener"
+           class="flex flex-col items-center hover:opacity-80 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M16.862 13.487a4.978 4.978 0 01-2.175-.528.983.983 0 00-1.052.091l-.65.489a7.033 7.033 0 01-3.196-3.196l.49-.65a.983.983 0 00.09-1.052 4.978 4.978 0 01-.528-2.175.982.982 0 00-.982-.982H7.34c-.543 0-.982.44-.982.982 0 5.963 4.84 10.803 10.803 10.803.543 0 .982-.44.982-.982v-1.518c0-.543-.44-.982-.982-.982z"/>
+          </svg>
+          <span class="mt-1">WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+  <!-- Bottom Sheet: Ratecard -->
+  <div id="sheetOverlay" class="fixed inset-0 bg-black/40 hidden"></div>
+  <aside id="rateSheet" class="sheet fixed left-0 right-0 bottom-0 bg-white rounded-t-3xl shadow-2xl z-50">
+    <div class="max-w-md mx-auto">
+      <div class="p-4 pt-6">
+        <div class="mx-auto w-12 h-1.5 rounded-full bg-gray-200 mb-3"></div>
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-semibold">Ratecard</h3>
+          <button id="btnCloseSheet" class="rounded-full px-3 py-1 bg-gray-100">Close</button>
+        </div>
+      </div>
+      <div class="px-4 pb-6">
+       
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salon Ratecard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-4 bg-gray-50">
+
+  <!-- Categories -->
+  <div class="flex gap-2 overflow-x-auto pb-2">
+    <button onclick="showCategory('men')" id="btn-men"
+      class="px-3 py-1.5 rounded-full bg-pink-100 text-pink-700 text-sm font-medium">Men</button>
+    <button onclick="showCategory('women')" id="btn-women"
+      class="px-3 py-1.5 rounded-full bg-gray-100 text-gray-700 text-sm font-medium">Women</button>
+    <button onclick="showCategory('kids')" id="btn-kids"
+      class="px-3 py-1.5 rounded-full bg-gray-100 text-gray-700 text-sm font-medium">Kids</button>
+  </div>
+
+  <!-- Items List -->
+  <ul id="itemsList" class="mt-3 space-y-2 text-sm"></ul>
+
+  <!-- Cart Summary -->
+  <div id="cartSummary" class="mt-4 p-3 bg-white rounded-lg shadow text-sm hidden">
+    <p class="font-medium">Summary</p>
+    <p>Total: <span id="total" class="font-semibold">₹0</span></p>
+    <p>Discount : <span id="discount" class="font-semibold text-green-600">₹0</span></p>
+    <p>Final Amount: <span id="final" class="font-bold text-pink-700">₹0</span></p>
+  </div>
+
+  <!-- Single Book Button -->
+  <div class="mt-4">
+    <button onclick="sendToWhatsApp()" 
+      class="w-full py-2 px-4 bg-green-500 text-white font-semibold rounded-lg shadow">
+      Book from Ratecard
+    </button>
+  </div>
+
+  <script>
+    // Service data
+    const services = {
+      men: [
+        { name: "Haircut + Hairwash + Facewash", desc: "Men’s Grooming", price: 149 },
+        { name: "Beard + Beardo Oil + Facewash", desc: "Men’s Grooming", price: 99 },
+        { name: "Men’s Basic Requirement Package", desc: "Haircut + Beard + Head Massage", price: 299 }
+      ],
+      women: [
+        { name: "Facial + Cleanup", desc: "Women’s Skincare", price: 499 },
+        { name: "Hair Spa", desc: "Women’s Hair Care", price: 699 },
+        { name: "Bridal Makeup", desc: "Special Occasion", price: 9999 }
+      ],
+      kids: [
+        { name: "Kids Haircut", desc: "Fun & Gentle", price: 99 },
+        { name: "Kids Styling", desc: "Trendy Looks", price: 149 }
+      ],
+      spa: [
+        { name: "Relaxing Body Spa", desc: "Full Body Relaxation", price: 1299 },
+        { name: "Aroma Therapy", desc: "Soothing Experience", price: 999 }
+      ]
+    };
+
+    // Selected items
+    let selectedItems = [];
+
+    // Render items
+    function showCategory(category) {
+      const list = document.getElementById("itemsList");
+      list.innerHTML = "";
+
+      services[category].forEach((item, index) => {
+        const id = `${category}-${index}`;
+        list.innerHTML += `
+          <li id="${id}" onclick="toggleItem('${id}','${item.name}',${item.price})"
+              class="flex items-center justify-between bg-pink-50 rounded-2xl p-3 cursor-pointer transition">
+            <div>
+              <p class="font-medium">${item.name}</p>
+              <p class="text-gray-500 text-xs">${item.desc}</p>
+            </div>
+            <span class="font-semibold">₹${item.price}</span>
+          </li>
+        `;
+      });
+
+      // Update button highlight
+      document.querySelectorAll("button").forEach(btn => {
+        if (btn.id.startsWith("btn-")) {
+          btn.classList.remove("bg-pink-100", "text-pink-700");
+          btn.classList.add("bg-gray-100", "text-gray-700");
+        }
+      });
+      document.getElementById("btn-" + category).classList.add("bg-pink-100", "text-pink-700");
+      document.getElementById("btn-" + category).classList.remove("bg-gray-100", "text-gray-700");
+    }
+
+    // Toggle selection
+    function toggleItem(id, name, price) {
+      const element = document.getElementById(id);
+      const exists = selectedItems.find(i => i.id === id);
+
+      if (exists) {
+        // remove
+        selectedItems = selectedItems.filter(i => i.id !== id);
+        element.classList.remove("bg-green-100", "border", "border-green-500");
+        element.classList.add("bg-pink-50");
+      } else {
+        // add
+        selectedItems.push({ id, name, price });
+        element.classList.remove("bg-pink-50");
+        element.classList.add("bg-green-100", "border", "border-green-500");
+      }
+
+      updateSummary();
+    }
+
+    // Update summary
+    function updateSummary() {
+      const summary = document.getElementById("cartSummary");
+      if (selectedItems.length === 0) {
+        summary.classList.add("hidden");
+        return;
+      }
+      summary.classList.remove("hidden");
+
+      let total = selectedItems.reduce((sum, item) => sum + item.price, 0);
+      let discount = Math.round(total * 0.15);
+      let final = total - discount;
+
+      document.getElementById("total").innerText = `₹${total}`;
+      document.getElementById("discount").innerText = `₹${discount}`;
+      document.getElementById("final").innerText = `₹${final}`;
+    }
+
+    // Send to WhatsApp
+    function sendToWhatsApp() {
+      if (selectedItems.length === 0) {
+        alert("Please select at least one service!");
+        return;
+      }
+
+      let message = "Hello, I would like to book these services:%0A%0A";
+      let total = 0;
+
+      selectedItems.forEach(item => {
+        message += `• ${item.name} - ₹${item.price}%0A`;
+        total += item.price;
+      });
+
+      let discount = Math.round(total * 0.15);
+      let final = total - discount;
+
+      message += `%0ATotal: ₹${total}`;
+      message += `%0ADiscount : ₹${discount}`;
+      message += `%0AFinal Payable: ₹${final}`;
+
+      // Replace with your salon's WhatsApp number
+      const phone = "918432019333"; 
+      const url = `https://api.whatsapp.com/send?phone=${phone}&text=${message}`;
+      window.open(url, "_blank");
+    }
+
+    // Load default category
+    showCategory("men");
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script>
+    // Call button
+    document.getElementById('btnCall')?.addEventListener('click', () => {
+      window.location.href = 'tel:+918432019333';
+    });
+
+    // Ratecard sheet logic
+    const sheet = document.getElementById('rateSheet');
+    const overlay = document.getElementById('sheetOverlay');
+    const openers = [document.getElementById('btnRatecard'), document.getElementById('btnRatecard2')];
+    const closer = document.getElementById('btnCloseSheet');
+
+    function openSheet() {
+      sheet.classList.add('open');
+      overlay.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeSheet() {
+      sheet.classList.remove('open');
+      overlay.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+    openers.forEach(btn => btn && btn.addEventListener('click', openSheet));
+    closer?.addEventListener('click', closeSheet);
+    overlay?.addEventListener('click', closeSheet);
+
+    // Improve ticker smoothness on resize by cloning if needed
+    // (Already duplicated; this is a safety net if you add more chips later)
+    const track = document.getElementById('tickerTrack');
+    function ensureTickerWidth() {
+      const total = Array.from(track.children).reduce((w, el) => w + el.getBoundingClientRect().width, 0);
+      const wrap = track.parentElement.getBoundingClientRect().width;
+      if (total < wrap * 2) {
+        // clone once to keep loop smooth
+        track.appendChild(track.children[0].cloneNode(true));
+      }
+    }
+    window.addEventListener('load', ensureTickerWidth);
+    window.addEventListener('resize', ensureTickerWidth);
+  </script>
+</body>
+</html>
