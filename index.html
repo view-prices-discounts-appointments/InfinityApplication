@@ -352,7 +352,10 @@
   </div>
 
   <!-- Items List -->
-  <ul id="itemsList" class="mt-3 space-y-2 text-sm"></ul>
+  <div class="mt-3 max-h-80 overflow-y-auto">
+    <ul id="itemsList" class="space-y-2 text-sm"></ul>
+  </div>
+
 
   <!-- Cart Summary -->
   <div id="cartSummary" class="mt-4 p-3 bg-white rounded-lg shadow text-sm hidden">
@@ -374,22 +377,118 @@
     // Service data
     const services = {
       men: [
-        { name: "Haircut + Hairwash + Facewash", desc: "Men’s Grooming", price: 149 },
-        { name: "Beard + Beardo Oil + Facewash", desc: "Men’s Grooming", price: 99 },
-        { name: "Men’s Basic Requirement Package", desc: "Haircut + Beard + Head Massage", price: 299 }
-      ],
+  { name: "Haircut + Hairwash + Facewash", desc: "Men’s Grooming", price: 149 },
+  { name: "Beard + Beardo Oil + Facewash", desc: "Men’s Grooming", price: 99 },
+  { name: "Beard + Scrub + Beard Oil + Raaga Detan", desc: "Men’s Grooming", price: 199 },
+  { 
+    name: "Men (Basic Requirement Package)", 
+    desc: "Haircut + Beard + Head Massage + Raaga Detan", 
+    price: 299 
+  },
+  { 
+    name: "Richfeel Men (Most Popular Package)", 
+    desc: "Haircut + Beard + Head Massage + Raaga Detan + Facial (Steam) + Hair Mask + Hairwash + Back Massage + Nose Peel Off + Hair Setting", 
+    price: 699 
+  },
+  { 
+    name: "Oxylife Men", 
+    desc: "Haircut + Beard + Head Massage + Raaga Detan + Facial (Steam) + Hair Mask + Hairwash + Back Massage + Nose Peel Off + Hair Setting", 
+    price: 999 
+  },
+  { 
+    name: "O3+ Professional Men", 
+    desc: "Haircut + Beard + Head Massage + Raaga Detan + Facial (Steam) + Hair Mask + Hairwash + Back Massage + Nose Peel Off + Hair Setting", 
+    price: 2999 
+  }
+]
+,
       women: [
-        { name: "Facial + Cleanup", desc: "Women’s Skincare", price: 499 },
-        { name: "Hair Spa", desc: "Women’s Hair Care", price: 699 },
-        { name: "Bridal Makeup", desc: "Special Occasion", price: 9999 }
-      ],
+  // HAIR
+  { name: "Hair Cut", desc: "Women’s Hair Service", price: 250 },
+  { name: "Hair Cut + Hairwash + Bluedry", desc: "Women’s Hair Service", price: 350 },
+  { name: "Normal Hair Spa", desc: "Women’s Hair Spa", price: 1000 },
+  { name: "Dandruff Treatment", desc: "Women’s Hair Spa", price: 500 },
+  { name: "Protein Hair Spa", desc: "Women’s Hair Spa", price: 1500 },
+
+  // BEAUTY
+  { name: "Threading", desc: "Women’s Beauty Care", price: 30 },
+  { name: "Upper Lip", desc: "Women’s Beauty Care", price: 10 },
+  { name: "Forehead", desc: "Women’s Beauty Care", price: 10 },
+  { name: "Chin", desc: "Women’s Beauty Care", price: 10 },
+  { name: "Side Lock", desc: "Women’s Beauty Care", price: 70 },
+  { name: "Full Face", desc: "Women’s Beauty Care", price: 150 },
+
+  // D-TAN
+  { name: "Raga D-tan", desc: "Women’s D-tan", price: 350 },
+  { name: "Tan Eriger D-tan", desc: "Women’s D-tan", price: 550 },
+  { name: "Full Body D-tan", desc: "Women’s D-tan", price: 1500 },
+
+  // BLEACH
+  { name: "Face Bleach", desc: "Women’s Bleach", price: 350 },
+  { name: "Full Body Bleach", desc: "Women’s Bleach", price: 1500 },
+
+  // CLEANUP
+  { name: "Fruit Cleanup", desc: "Women’s Cleanup", price: 350 },
+  { name: "Coffee Can Cleanup", desc: "Women’s Cleanup", price: 350 },
+
+  // POLISHING & MASSAGE
+  { name: "Full Body Polishing", desc: "Women’s Polishing", price: 1900 },
+  { name: "Full Body Massage", desc: "Women’s Massage", price: 1000 },
+
+  // TREATMENT
+  { name: "Straightening", desc: "Hair Treatment", price: 3000 },
+  { name: "Smoothing", desc: "Hair Treatment", price: 2500 },
+  { name: "Keratin", desc: "Hair Treatment", price: 4000 },
+  { name: "Botox", desc: "Hair Treatment", price: 6000 },
+  { name: "Nanoplastia", desc: "Hair Treatment", price: 3000 },
+
+  // WAXING (Normal)
+  { name: "Full Hands Normal Waxing", desc: "Women’s Waxing", price: 150 },
+  { name: "Under Arms Waxing", desc: "Women’s Waxing", price: 80 },
+  { name: "Full Leg Waxing", desc: "Women’s Waxing", price: 500 },
+  { name: "Half Leg Waxing", desc: "Women’s Waxing", price: 250 },
+
+  // WAXING (RICA)
+  { name: "Rica Full Hands Waxing", desc: "Women’s Waxing", price: 350 },
+  { name: "Rica Under Arms Waxing", desc: "Women’s Waxing", price: 100 },
+  { name: "Rica Full Leg Waxing", desc: "Women’s Waxing", price: 750 },
+  { name: "Rica Half Leg Waxing", desc: "Women’s Waxing", price: 350 },
+  { name: "Full Body Waxing Honey", desc: "Women’s Waxing", price: 2000 },
+  { name: "Rica Full Body Waxing", desc: "Women’s Waxing", price: 2500 },
+  { name: "Bikini Waxing Rica", desc: "Women’s Waxing", price: 1000 },
+  { name: "Brazilian Waxing", desc: "Women’s Waxing", price: 1000 },
+  { name: "Peel Off Waxing", desc: "Women’s Waxing", price: 1500 },
+
+  // FACIAL
+  { name: "Hydra Facial", desc: "Women’s Facial", price: 2500 },
+  { name: "Sara Diamond Facial", desc: "Women’s Facial", price: 1500 },
+  { name: "O3 Facial", desc: "Women’s Facial", price: 2000 },
+  { name: "Rica Feel Facial", desc: "Women’s Facial", price: 1000 },
+  { name: "Lotass Facial", desc: "Women’s Facial", price: 1000 },
+  { name: "Lotass Diamond Facial", desc: "Women’s Facial", price: 1500 },
+  { name: "Mohtarma Facial 24k Gold", desc: "Women’s Facial", price: 1000 },
+  { name: "Mix Fruit Mohtarma Facial", desc: "Women’s Facial", price: 550 },
+  { name: "Wine Facial", desc: "Women’s Facial", price: 1000 },
+  { name: "Rice Feel Facial", desc: "Women’s Facial", price: 1000 },
+
+  // HAIR COLOUR
+  { name: "Root Touch Up", desc: "Hair Colouring", price: 1300 },
+  { name: "Global Hair Colour", desc: "Hair Colouring", price: 3000 },
+  { name: "Fashion Global Colour", desc: "Hair Colouring", price: 4000 },
+  { name: "Balayage Colour", desc: "Hair Colouring", price: 4000 },
+  { name: "Ombre Colour", desc: "Hair Colouring", price: 2500 },
+  { name: "Global Highlights", desc: "Hair Colouring", price: 4000 },
+  { name: "Highlights (1 Strip)", desc: "Hair Colouring", price: 350 },
+  { name: "Funky Colour", desc: "Hair Colouring", price: 550 },
+
+  // SPECIAL
+  { name: "Bridal Makeup", desc: "Special Occasion", price: 9999 }
+]
+
+,
       kids: [
         { name: "Kids Haircut", desc: "Fun & Gentle", price: 99 },
         { name: "Kids Styling", desc: "Trendy Looks", price: 149 }
-      ],
-      spa: [
-        { name: "Relaxing Body Spa", desc: "Full Body Relaxation", price: 1299 },
-        { name: "Aroma Therapy", desc: "Soothing Experience", price: 999 }
       ]
     };
 
@@ -497,6 +596,20 @@
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
